@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from './datasource/Database.module';
-import { UsersModule } from './users/users.module';
+import { ConfigModule } from '@nestjs/config/dist/config.module';
+import { IsUniqueConstraint } from './common/validators/is-unique.constraint';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
-    UsersModule
   ],
   controllers: [],
-  providers: [],
+  providers: [IsUniqueConstraint],
 })
 export class AppModule {}
