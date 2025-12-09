@@ -1,7 +1,7 @@
 import { Exclude } from 'class-transformer';
 import { BookingEntity } from '../bookings/bookings.entity';
 import { ProviderEntity } from '../providers/providers.entity';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToOne, OneToMany, UpdateDateColumn, Index } from 'typeorm';
 
 
 export enum UserRole {
@@ -19,7 +19,8 @@ export class UserEntity {
     @Column()
     name: string;
 
-    @Column({ unique: true })
+    @Index({ unique: true })
+    @Column()
     email: string;
 
     @Column()
@@ -42,15 +43,21 @@ export class UserEntity {
     @Column({ nullable: true })
     avatar: string;
 
+    @Column({ default: false })
+    isVerified: boolean;
+
     @CreateDateColumn({
         name: 'created_at',
     })
     createdAt: Date;
 
+    @UpdateDateColumn({ name: 'updated_at' })
+    updatedAt: Date;
+
     @OneToOne(() => ProviderEntity, provider => provider.user, { cascade: true })
     provider: ProviderEntity;
     
-    @OneToMany(() => BookingEntity, booking => booking.user, { cascade: true })
+    @OneToMany(() => BookingEntity, booking => booking.user)
     bookings: BookingEntity[];
 
 }

@@ -10,7 +10,6 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
         return next.handle().pipe(
         map((res) => {
             return {
-            status: res?.status ?? true,
             statusCode: res.statusCode ?? response.statusCode,
             message: res?.message ?? 'Request successful',
             data: instanceToPlain(res?.data ?? res),

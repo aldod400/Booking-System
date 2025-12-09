@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProvidersModule } from './providers/providers.module';
 import { SlotsModule } from './slots/slots.module';
 import { BookingsModule } from './bookings/bookings.module';
+import { UserAuthService } from './auth/user-auth/user-auth.service';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { BookingsModule } from './bookings/bookings.module';
     BookingsModule,
   ],
   controllers: [],
-  providers: [IsUniqueConstraint],
+  providers: [IsUniqueConstraint, UserAuthService],
 })
 export class AppModule {}
