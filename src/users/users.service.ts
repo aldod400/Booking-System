@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
-      private readonly allowedExtensions = ['.png', '.pdf', '.jpeg', '.jpg'];
+    private readonly allowedExtensions = ['.png', '.pdf', '.jpeg', '.jpg'];
 
     constructor( @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>) { }
     
@@ -33,7 +33,13 @@ export class UsersService {
             role    : user.role ?? 'user',
             avatar  : filePath ?? null
         });
+        
+        const savedUser = await this.userRepository.save(newUser);
 
-        return newUser;
+        return savedUser;
+    }
+
+    async findByEmail(email: string): Promise<UserEntity | null> {
+        return await this.userRepository.findOneBy({ email });
     }
 }

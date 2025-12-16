@@ -8,6 +8,8 @@ import { ProvidersModule } from './providers/providers.module';
 import { SlotsModule } from './slots/slots.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { UserAuthService } from './auth/user-auth/user-auth.service';
+import { BlacklistTokenModule } from './blacklist-token/blacklist-token.module';
+import { BlacklistTokenService } from './blacklist-token/blacklist-token.service';
 
 @Module({
   imports: [
@@ -18,8 +20,9 @@ import { UserAuthService } from './auth/user-auth/user-auth.service';
     ProvidersModule,
     SlotsModule,
     BookingsModule,
+    BlacklistTokenModule,
   ],
   controllers: [],
-  providers: [IsUniqueConstraint, UserAuthService],
+  providers: [IsUniqueConstraint, UserAuthService, BlacklistTokenService],
 })
 export class AppModule {}

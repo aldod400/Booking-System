@@ -1,19 +1,38 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { UserAuthService } from './user-auth.service';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { UserEntity } from 'src/users/users.entity';
+import { RegisterDto } from '../dto/register.dto';
+import { LoginDto } from '../dto/login.dto';
+import { JwtBlacklistGuard } from 'src/jwt-blacklist/jwt-blacklist.guard';
 
 @Controller('auth/users')
 export class UserAuthController {
     constructor(private readonly userAuthService: UserAuthService) { }
     
     @Post('register')
-    async register(user: CreateUserDto): Promise<any> {
-
+    async register(@Body() user: RegisterDto): Promise<any> {
         return {
             statusCode: 201,
             message   : 'User registered successfully',
             data: await this.userAuthService.register(user),
         }
+    }
+
+    @Post('login')
+    async login(@Body() user: LoginDto): Promise<any> {
+        return {
+            statusCode: 200,
+            message   : 'User logged in successfully',
+            data: await this.userAuthService.login(user),
+        };
+    }
+    
+    @Post('logout')
+    @UseGuards(JwtBlacklistGuard)
+    async logout(): Promise<any> {
+        await this.userAuthService.logout();
+        return {
+            statusCode: 200,
+            message   : 'User logged out successfully',
+        };
     }
 }

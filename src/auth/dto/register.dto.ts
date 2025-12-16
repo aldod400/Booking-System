@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Matches, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsEmpty, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, MinLength } from "class-validator";
 import { IsFile, MaxFileSize, MemoryStoredFile } from "nestjs-form-data";
 import { IsUnique } from "src/common/validators/is-unique.decorator";
 import { UserEntity } from "src/users/users.entity";
@@ -11,7 +11,9 @@ export class RegisterDto {
 
     @IsNotEmpty()
     @IsUnique({ entity: UserEntity, column: 'email' }, { message: 'Email already in use' })
+    @IsEmail({}, { message: 'Invalid email format' })
     email: string;
+
 
     @MinLength(6, { message: 'Password must be at least 6 characters long' })
     @MaxLength(20, { message: 'Password must be at most 20 characters long' })
@@ -21,7 +23,8 @@ export class RegisterDto {
     password: string;
     
     
-    @IsFile()
+    @IsOptional()
+    @IsFile({ message: 'Avatar must be a valid file' })
     @MaxFileSize(2 * 1024 * 1024, { message: 'Avatar file size must not exceed 2MB' })
     avatar?: MemoryStoredFile;
 }
