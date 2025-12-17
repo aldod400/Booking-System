@@ -8,5 +8,5 @@ export interface IAuthService {
 
     login(user: LoginDto): Promise<UserEntity>;
     
-    logout(userId: number): Promise<void>;
+    logout(user: UserEntity): Promise<void>;
 }

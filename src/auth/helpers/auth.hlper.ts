@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { randomUUID } from 'crypto';
 import { UserEntity } from 'src/users/users.entity';
 
 @Injectable()
@@ -19,7 +20,8 @@ export class AuthHelper {
         const payload = {
             id: user.id,
             email: user.email,
-            role: user.role
+            role: user.role,
+            token: randomUUID()
         };
         
         return this.jwtService.sign(payload);

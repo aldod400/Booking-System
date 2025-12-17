@@ -5,11 +5,16 @@ import { LoginDto } from '../dto/login.dto';
 import { RegisterDto } from '../dto/register.dto';
 import { UsersService } from 'src/users/users.service';
 import { AuthHelper } from '../helpers/auth.hlper';
+import { BlacklistTokenService } from 'src/blacklist-token/blacklist-token.service';
 
 @Injectable()
 export class UserAuthService implements IAuthService {
 
-    constructor(private userService: UsersService, private authHelper: AuthHelper) { }
+    constructor(
+        private userService: UsersService,
+        private authHelper: AuthHelper,
+        private blacklistService: BlacklistTokenService
+    ) { }
     
     async register(user: RegisterDto): Promise<UserEntity> {
         const newUser = await this.userService.create({
@@ -40,9 +45,9 @@ export class UserAuthService implements IAuthService {
 
     }
 
-    async logout(): Promise<void> {
-        
-        return;
+    async logout(user: any): Promise<void> {
+        console.log(user);
+        return await this.blacklistService.add(user.token, new Date(user.exp * 1000));
     }
 
     

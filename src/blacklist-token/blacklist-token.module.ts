@@ -7,6 +7,6 @@ import { BlacklistTokenService } from './blacklist-token.service';
     imports: [TypeOrmModule.forFeature([BlacklistTokenEntity])],
     controllers: [],
     providers: [BlacklistTokenService],
-    exports: [],
+    exports: [BlacklistTokenService],
 })
 export class BlacklistTokenModule {}

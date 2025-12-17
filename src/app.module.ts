@@ -7,9 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProvidersModule } from './providers/providers.module';
 import { SlotsModule } from './slots/slots.module';
 import { BookingsModule } from './bookings/bookings.module';
-import { UserAuthService } from './auth/user-auth/user-auth.service';
 import { BlacklistTokenModule } from './blacklist-token/blacklist-token.module';
-import { BlacklistTokenService } from './blacklist-token/blacklist-token.service';
 
 @Module({
   imports: [
@@ -23,6 +21,6 @@ import { BlacklistTokenService } from './blacklist-token/blacklist-token.service
     BlacklistTokenModule,
   ],
   controllers: [],
-  providers: [IsUniqueConstraint, UserAuthService, BlacklistTokenService],
+  providers: [IsUniqueConstraint],
 })
 export class AppModule {}

@@ -1,8 +1,8 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { UserAuthService } from './user-auth.service';
 import { RegisterDto } from '../dto/register.dto';
 import { LoginDto } from '../dto/login.dto';
-import { JwtBlacklistGuard } from 'src/jwt-blacklist/jwt-blacklist.guard';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @Controller('auth/users')
 export class UserAuthController {
@@ -27,9 +27,9 @@ export class UserAuthController {
     }
     
     @Post('logout')
-    @UseGuards(JwtBlacklistGuard)
-    async logout(): Promise<any> {
-        await this.userAuthService.logout();
+    @UseGuards(JwtAuthGuard)
+    async logout(@Req() request): Promise<any> {
+        await this.userAuthService.logout(request.user);
         return {
             statusCode: 200,
             message   : 'User logged out successfully',

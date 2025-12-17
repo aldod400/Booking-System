@@ -5,15 +5,15 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class BlacklistTokenService {
-    constructor(@InjectRepository(BlacklistTokenEntity) private readonly blacklistTokenRepository: Repository<BlacklistTokenEntity>) { }
+    constructor(
+        @InjectRepository(BlacklistTokenEntity) private readonly blacklistTokenRepository: Repository<BlacklistTokenEntity>
+    ) { }
 
-    async add(token: string, expiresAt?: Date): Promise<BlacklistTokenEntity> {
-        const blacklistedToken = this.blacklistTokenRepository.create({ token, expiresAt });
-        return await this.blacklistTokenRepository.save(blacklistedToken);
+    async add(token: string, expiresAt: Date): Promise<void> {
+        await this.blacklistTokenRepository.save({ token: token, expiresAt });
     }
 
-    has(token: string): boolean {
-        const tokenExist = this.blacklistTokenRepository.findOneBy({ token });
-        return !!tokenExist;
+    async has(token: string): Promise<boolean> {
+        return await this.blacklistTokenRepository.exist({ where: { token } });
     }
 }
