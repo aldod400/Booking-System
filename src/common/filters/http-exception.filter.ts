@@ -37,7 +37,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
     }
 
     const responseBody: any = {
-      status: false,
       statusCode: status,
       message,
     };

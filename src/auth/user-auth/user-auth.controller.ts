@@ -3,6 +3,7 @@ import { UserAuthService } from './user-auth.service';
 import { RegisterDto } from '../dto/register.dto';
 import { LoginDto } from '../dto/login.dto';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { UserEntity } from 'src/users/users.entity';
 
 @Controller('auth/users')
 export class UserAuthController {
@@ -10,10 +11,11 @@ export class UserAuthController {
     
     @Post('register')
     async register(@Body() user: RegisterDto): Promise<any> {
+        const result: any = await this.userAuthService.register(user);
         return {
             statusCode: 201,
             message   : 'User registered successfully',
-            data: await this.userAuthService.register(user),
+            data: {user: result.newUser, token: result.token},
         }
     }
 
@@ -22,7 +24,7 @@ export class UserAuthController {
         return {
             statusCode: 200,
             message   : 'User logged in successfully',
-            data: await this.userAuthService.login(user),
+            data      : await this.userAuthService.login(user),
         };
     }
     

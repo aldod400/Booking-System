@@ -46,8 +46,8 @@ export class UserAuthService implements IAuthService {
     }
 
     async logout(user: any): Promise<void> {
-        console.log(user);
-        return await this.blacklistService.add(user.token, new Date(user.exp * 1000));
+        await this.blacklistService.add(user.token, new Date(user.exp * 1000));
+        return;
     }
 
     

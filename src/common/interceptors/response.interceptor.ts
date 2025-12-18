@@ -9,11 +9,15 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
         
         return next.handle().pipe(
         map((res) => {
-            return {
-            statusCode: res.statusCode ?? response.statusCode,
-            message: res?.message ?? 'Request successful',
-            data: instanceToPlain(res?.data ?? res),
+            const result: any = {
+                statusCode: res.statusCode ?? response.statusCode,
+                message: res?.message ?? 'Request successful',
             };
+
+            if (res?.data)
+                result.data = instanceToPlain(res.data);
+
+            return result;
         }),
         );
   }
