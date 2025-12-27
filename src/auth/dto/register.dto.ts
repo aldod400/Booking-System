@@ -1,6 +1,6 @@
 import { IsEmail, IsEmpty, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, MinLength } from "class-validator";
 import { IsFile, MaxFileSize, MemoryStoredFile } from "nestjs-form-data";
-import { IsUnique } from "src/common/validators/is-unique.decorator";
+import { IsUnique } from "src/common/decorators/validators/is-unique.decorator";
 import { UserEntity } from "src/users/users.entity";
 
 export class RegisterDto {

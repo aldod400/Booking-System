@@ -1,5 +1,5 @@
 import { IsEmpty, IsNotEmpty, Matches, MaxLength, MinLength } from "class-validator";
-import { IsUnique } from "src/common/validators/is-unique.decorator";
+import { IsUnique } from "src/common/decorators/validators/is-unique.decorator";
 import { UserEntity, UserRole } from "../users.entity";
 import { MaxFileSize } from "nestjs-form-data/dist/decorators/validation/max-file-size.validator";
 import { IsFile } from "nestjs-form-data/dist/decorators/validation/is-file.validator";
